@@ -19,6 +19,9 @@ async function filesIn(directory) {
 }
 
 const files = await filesIn(dist);
+if (files.some(file => file.endsWith('.map'))) {
+  throw new Error('Sourcemaps must be removed before deploying dist');
+}
 let rawBytes = 0;
 let gzipBytes = 0;
 for (const file of files) {
@@ -32,3 +35,4 @@ if (rawBytes > maxRawBytes || gzipBytes > maxGzipBytes) {
   console.error(`Bundle size limit exceeded: raw <= ${maxRawBytes / 1024} KiB, gzip <= ${maxGzipBytes / 1024} KiB`);
   process.exit(1);
 }
+

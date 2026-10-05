@@ -1,5 +1,12 @@
 <script setup>
 import './style.css';
+import { ref } from 'vue';
+import { monitoringMode, triggerMonitoringDemo } from './monitoring.js';
+
+const monitoringResult = ref('');
+async function testMonitoring() {
+  monitoringResult.value = await triggerMonitoringDemo();
+}
 
 const pipeline = [
   { number: '01', title: 'Commit', text: 'GitHub 管理源码和 Pull Request。' },
@@ -23,6 +30,13 @@ const pipeline = [
       <div class="actions"><a class="primary" href="#pipeline">查看交付流程 <span>→</span></a><a class="secondary" href="https://vite.dev" target="_blank" rel="noreferrer">了解 Vite</a></div>
     </section>
 
+    <section class="monitoring-demo" aria-label="错误监控演示">
+      <h2>错误监控演示</h2>
+      <p>当前模式：{{ monitoringMode }}</p>
+      <button type="button" @click="testMonitoring">触发测试错误</button>
+      <p role="status">{{ monitoringResult }}</p>
+    </section>
+
     <section id="pipeline" class="pipeline">
       <div class="section-heading"><p class="eyebrow">DELIVERY PIPELINE</p><h2>一次提交，四个阶段</h2></div>
       <div class="steps">
@@ -33,3 +47,4 @@ const pipeline = [
     </section>
   </main>
 </template>
+

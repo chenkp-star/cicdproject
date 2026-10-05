@@ -2,3 +2,8 @@ dist/
 node_modules/
 image.tar.gz
 .DS_Store
+
+.env
+.env.local
+.env.*.local
+.env.sentry-build-plugin
